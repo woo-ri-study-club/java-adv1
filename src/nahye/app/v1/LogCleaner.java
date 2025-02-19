@@ -1,11 +1,7 @@
 package nahye.app.v1;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 public class LogCleaner implements Runnable {
@@ -18,10 +14,10 @@ public class LogCleaner implements Runnable {
 
     @Override
     public void run() {
-
         try {
             while (true) {
-                cleanMemoryQueue();
+                System.out.println("로그 정리 중...");
+                cleanQueue();
                 cleanLogFile();
                 Thread.sleep(5000);
             }
@@ -30,30 +26,25 @@ public class LogCleaner implements Runnable {
         }
     }
 
-    private void cleanMemoryQueue() {
-        if (queue.size() > 10) {
-            int itemsToRemove = queue.size() - 10;
-            for (int i = 0; i < itemsToRemove; i++) {
-                queue.poll();
+    private void cleanQueue() {
+        while (queue.size() > 10) {
+            String removed = queue.poll();
+            if (removed != null) {
+                System.out.println("삭제된 로그: " + removed);
             }
         }
     }
 
     private void cleanLogFile() {
+        String logPath = "news_log.txt";
 
-        try {
-            List<String> allLines = Files.readAllLines(Paths.get("news_log.txt"));
-
-            if (allLines.size() > 10) {
-                List<String> newLines = new ArrayList<>();
-                for (int i = allLines.size() - 10; i < allLines.size(); i++) {
-                    newLines.add(allLines.get(i));
-                }
-                Files.write(Paths.get("news_log.txt"), newLines, StandardOpenOption.TRUNCATE_EXISTING);
+        try (FileWriter writer = new FileWriter(logPath, false)) {
+            for (String log : queue) {
+                writer.write(log + "\n");
             }
+            writer.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

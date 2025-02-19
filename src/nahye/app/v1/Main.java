@@ -9,14 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Thread logThread = new Thread(new LogThread(logQueue), "Logger");
-        logThread.setDaemon(true);
-        logThread.start();
-
-        Thread logCleaner = new Thread(new LogCleaner(logQueue), "LogCleaner");
-        logCleaner.setDaemon(true);
-        logCleaner.start();
-
         NewsThread sportsThread = new NewsThread("Sports", logQueue);
         NewsThread itThread = new NewsThread("IT", logQueue);
         NewsThread economyThread = new NewsThread("Economy", logQueue);
@@ -28,6 +20,10 @@ public class Main {
         thread1.start();
         thread2.start();
         thread3.start();
+
+        Thread logCleaner = new Thread(new LogCleaner(logQueue), "LogCleaner");
+        logCleaner.setDaemon(true);
+        logCleaner.start();
 
         try {
             Thread.sleep(15000);
