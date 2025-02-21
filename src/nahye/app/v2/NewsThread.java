@@ -27,7 +27,7 @@ public class NewsThread implements Runnable {
 
                 System.out.println(message);
                 queue.put(message);
-
+                Thread.yield();
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

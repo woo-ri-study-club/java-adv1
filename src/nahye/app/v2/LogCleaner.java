@@ -14,20 +14,17 @@ public class LogCleaner implements Runnable {
 
     @Override
     public void run() {
-        try {
-            while (!Thread.currentThread().isInterrupted()) {
-                if(queue.isEmpty()) {
-                    Thread.yield();
-                    continue;
-                }
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
                 System.out.println("로그 정리 중...");
                 cleanQueue();
                 cleanLogFile();
                 Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("LogCleaner 종료합니다.");
+                break;
             }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.out.println("LogCleaner 종료합니다.");
         }
     }
 
