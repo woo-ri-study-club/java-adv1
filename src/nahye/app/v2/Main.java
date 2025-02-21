@@ -22,7 +22,6 @@ public class Main {
         thread3.start();
 
         Thread logCleaner = new Thread(new LogCleaner(logQueue), "LogCleaner");
-        logCleaner.setDaemon(true);
         logCleaner.start();
 
         Thread.sleep(15000);
@@ -36,6 +35,7 @@ public class Main {
         thread3.join();
 
         logCleaner.interrupt();
+        logCleaner.join();
     }
 }
 
