@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 sungbin.iml
 .idea/
+news_log.txt
 
 ### Eclipse ###
 .apt_generated
