@@ -2,7 +2,7 @@ package app.v2;
 
 import java.util.Deque;
 
-import static app.v1.ConsoleLogger.log;
+import static app.v2.ConsoleLogger.log;
 
 public class NewsLogCleaner implements Runnable{
     private NewsLogger newsLogger;

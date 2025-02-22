@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static app.v1.ConsoleLogger.log;
+import static app.v2.ConsoleLogger.log;
 
 public class NewsLogger {
     private Deque<NewsLog> logs = new ArrayDeque<>();

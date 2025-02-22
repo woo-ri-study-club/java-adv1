@@ -2,7 +2,7 @@ package app.v2;
 
 import java.util.Map;
 
-import static app.v1.ConsoleLogger.log;
+import static app.v2.ConsoleLogger.log;
 
 public class Crawler implements Runnable {
     private final String category;
