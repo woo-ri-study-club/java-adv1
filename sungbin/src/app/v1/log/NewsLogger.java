@@ -11,6 +11,8 @@ public class NewsLogger implements Logger {
 
     private final List<String> logs = new ArrayList<>();
 
+    private static final int MAX_LOGS = 10;
+
     public NewsLogger(String logFilePath) {
         this.logFilePath = logFilePath;
     }
@@ -24,7 +26,7 @@ public class NewsLogger implements Logger {
 
     @Override
     public void cleanLogs() {
-        if (logs.size() > 10) {
+        if (logs.size() > MAX_LOGS) {
             logs.removeFirst();
             rewriteFile();
             System.out.println("[LOG CLEANER] 로그 정리 완료 (10개 초과 삭제)");
