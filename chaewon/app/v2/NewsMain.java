@@ -25,23 +25,25 @@ public class NewsMain {
         economyThread.start();
         cleanerThread.start();
 
-        //15초 대기(각 크롤러와 클리너 스레드 작업 완료까지 메인 대기)
         try {
             Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.getStackTrace();
+        }
 
+        sportThread.interrupt();
+        itThread.interrupt();
+        economyThread.interrupt();
+        cleanerThread.interrupt();
+
+        try {
             sportThread.join();
             itThread.join();
             economyThread.join();
             cleanerThread.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.getStackTrace();
         }
-
-        //인터럽트를 통한 스레드 종료
-        sportThread.interrupt();
-        itThread.interrupt();
-        economyThread.interrupt();
-        cleanerThread.interrupt();
 
         System.out.println("프로그램 종료");
     }
