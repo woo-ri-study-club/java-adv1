@@ -1,4 +1,4 @@
-package ex.app.v2;
+package chaewon.app.v2;
 
 import java.util.List;
 import java.util.Random;

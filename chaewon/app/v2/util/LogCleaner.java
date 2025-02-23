@@ -1,6 +1,6 @@
-package ex.app.v2.util;
+package chaewon.app.v2.util;
 
-import static ex.app.v2.util.Logger.*;
+import static chaewon.app.v2.util.Logger.*;
 
 public class LogCleaner implements Runnable {
 

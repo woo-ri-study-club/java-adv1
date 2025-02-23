@@ -1,6 +1,6 @@
-package ex.app.v2;
+package chaewon.app.v2;
 
-import ex.app.v2.util.LogCleaner;
+import chaewon.app.v2.util.LogCleaner;
 
 import java.util.List;
 

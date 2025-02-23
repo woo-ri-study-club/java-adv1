@@ -1,4 +1,4 @@
-package ex.app.v2.util;
+package chaewon.app.v2.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
