@@ -1,6 +1,6 @@
-package ex.app.v1;
+package chaewon.app.v1;
 
-import ex.app.v1.util.LogCleaner;
+import chaewon.app.v1.util.LogCleaner;
 
 import java.util.List;
 
@@ -33,7 +33,9 @@ public class NewsMain {
             economyCrawler.stop();
             logCleaner.stop();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.getStackTrace();
         }
+
+        Logger.closeWriter();
     }
 }

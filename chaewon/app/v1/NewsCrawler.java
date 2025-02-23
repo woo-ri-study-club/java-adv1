@@ -1,11 +1,11 @@
-package ex.app.v1;
+package chaewon.app.v1;
 
 import java.util.List;
 import java.util.Random;
 
 import static ex.app.v1.util.Logger.*;
 
-public class NewsCrawler implements Runnable{
+public class NewsCrawler implements Runnable {
     private final Random random = new Random();
 
     private final String category;
@@ -19,14 +19,14 @@ public class NewsCrawler implements Runnable{
 
     @Override
     public void run() {
-        while(running){
+        while (running) {
             try {
-                //title 리스트 중 한 개만 랜덤으로 크롤링
+                Thread.sleep(3000);
+
                 int chooseIndex = random.nextInt(titles.size());
                 String chooseTitle = titles.get(chooseIndex);
                 log(category, chooseTitle);
 
-                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 errorLog("뉴스 크롤링 실패: " + e.getMessage());
             }
@@ -34,7 +34,8 @@ public class NewsCrawler implements Runnable{
 
     }
 
-    public void stop(){
+    public void stop() {
         running = false;
+        Thread.currentThread().interrupt();
     }
 }

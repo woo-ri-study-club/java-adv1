@@ -1,6 +1,6 @@
-package ex.app.v1.util;
+package chaewon.app.v1.util;
 
-import static ex.app.v1.util.Logger.*;
+import static chaewon.app.v1.util.Logger.*;
 
 public class LogCleaner implements Runnable {
     private boolean running = true;
@@ -14,11 +14,10 @@ public class LogCleaner implements Runnable {
                 while (getLogQueue().size() > getLogSize()) {
                     String oldLog = removeOldLog();
 
-                    if(oldLog != null){
-                        String deleteLog = logFormatter("DELETE",oldLog);
+                    if (oldLog != null) {
+                        String deleteLog = logFormatter("DELETE", oldLog);
 
                         System.out.println(deleteLog);
-                        logFileWriter(deleteLog);
                     }
                 }
 
@@ -28,7 +27,9 @@ public class LogCleaner implements Runnable {
         }
     }
 
-    public void stop(){
+    public void stop() {
         running = false;
+        Thread.currentThread().interrupt();
     }
 }
+

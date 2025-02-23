@@ -1,4 +1,4 @@
-package ex.app.v1.util;
+package chaewon.app.v1.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +13,17 @@ public class Logger {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final Path LOG_FILE_PATH = Path.of("log.txt");
     private static final int LOG_SIZE = 10;
+
+    private static BufferedWriter writer;
     private static final Deque<String> LOG_QUEUE = new ArrayDeque<>();
+
+    static {
+        try {
+            writer = new BufferedWriter(new FileWriter(LOG_FILE_PATH.toFile(), true));
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
+    }
 
     public static void log(String category, String message) {
         logProcess(logFormatter(category, message));
@@ -24,14 +34,6 @@ public class Logger {
     }
 
     private static void logProcess(String logText) {
-        String oldLog = removeOldLog();
-        if(oldLog != null){
-            String deleteLog = logFormatter("DELETE",oldLog);
-
-            System.out.println(deleteLog);
-            logFileWriter(deleteLog);
-        }
-
         LOG_QUEUE.add(logText);
         System.out.println(logText);
 
@@ -43,27 +45,35 @@ public class Logger {
     }
 
     static String removeOldLog() {
-        if (LOG_QUEUE.size() >= LOG_SIZE) {
-            return LOG_QUEUE.pollFirst();
-        }
-
-        return null;
+        return LOG_QUEUE.pollFirst();
     }
 
-    static void logFileWriter(String logText) {
+    private static void logFileWriter(String logText) {
         try {
-            Files.writeString(LOG_FILE_PATH, logText,
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            writer.write(logText);
+            writer.newLine();
+
+            writer.flush();
         } catch (IOException e) {
-            System.out.println("파일 저장 오류: " + e.getMessage());
+            e.getStackTrace();
         }
     }
 
-     static Deque<String> getLogQueue(){
+    public static void closeWriter() {
+        try {
+            if (writer != null) {
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
+    }
+
+    static Deque<String> getLogQueue() {
         return LOG_QUEUE;
     }
 
-     static int getLogSize(){
+    static int getLogSize() {
         return LOG_SIZE;
     }
 }
