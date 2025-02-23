@@ -22,13 +22,13 @@ public class Crawler implements Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            String crawlingData = crawling(category);
-            NewsLog log = new NewsLog(category, crawlingData);
-            newsLogger.add(log);
-            newsLogger.write(log);
-            Thread.yield();
-
             try {
+                String crawlingData = crawling(category);
+                NewsLog log = new NewsLog(category, crawlingData);
+                newsLogger.add(log);
+                newsLogger.write(log);
+                Thread.yield();
+
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
