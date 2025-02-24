@@ -11,6 +11,8 @@ public class NewsLogger implements Logger {
 
     private final List<String> logs = new ArrayList<>();
 
+    private static final int MAX_LOG_SIZE = 10;
+
     public NewsLogger(String logFilePath) {
         this.logFilePath = logFilePath;
     }
@@ -25,21 +27,19 @@ public class NewsLogger implements Logger {
     @Override
     public void cleanLogs() {
         synchronized (this) {
-            if (logs.size() > 10) {
+            if (logs.size() > MAX_LOG_SIZE) {
                 logs.removeFirst();
                 rewriteFile();
-                System.out.println("[LOG CLEANER] 로그 정리 완료 (10개 초과 삭제)");
+                log("[LOG CLEANER] 로그 정리 완료 (10개 초과 삭제)");
             }
         }
     }
 
     private void writeToFile() {
-        synchronized (this) {
-            try (FileWriter writer = new FileWriter(logFilePath, true)) {
-                writer.write(logs.getLast() + "\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try (FileWriter writer = new FileWriter(logFilePath, true)) {
+            writer.write(logs.getLast() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
